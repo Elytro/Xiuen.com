@@ -1,23 +1,408 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>xiuen.com</title>
-    <style>
-        body { font-family: -apple-system, "Segoe UI", sans-serif; display: flex;
-               min-height: 100vh; align-items: center; justify-content: center;
-               margin: 0; background: #f5f5f5; color: #333; }
-        .card { background: #fff; padding: 3rem 4rem; border-radius: 12px;
-                box-shadow: 0 4px 16px rgba(0,0,0,.08); text-align: center; }
-        h1 { margin: 0 0 .5rem; font-size: 1.6rem; }
-        p { margin: 0; color: #888; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="秀人网,秀人网资源,写真分享,图片资源,资源下载">
+<meta name="description" content="秀人网资源分享导航，聚合写真图集、视频与下载资源，提供简洁高效的资源索引入口。">
+<title>秀人网资源分享 · 首页</title>
+<link href="https://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+    :root{
+        --ink:#1a1a1a;
+        --ink-2:#5c5c5c;
+        --muted:#9a9a9a;
+        --line:#ececec;
+        --bg-soft:#fafafa;
+    }
+    body{
+        font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+        color:var(--ink);
+        background:#fff;
+        line-height:1.8;
+        -webkit-font-smoothing:antialiased;
+        letter-spacing:.2px;
+    }
+    a{color:inherit;}
+    a:hover,a:focus{color:inherit;text-decoration:none;}
+    ::selection{background:#1a1a1a;color:#fff;}
+
+    /* ---------- 导航 ---------- */
+    .navbar-site{
+        background:rgba(255,255,255,.86);
+        border:0;border-radius:0;margin-bottom:0;
+        transition:box-shadow .3s ease, background .3s ease;
+    }
+    .navbar-site.is-stuck{
+        box-shadow:0 1px 16px rgba(0,0,0,.06);
+        background:rgba(255,255,255,.96);
+        -webkit-backdrop-filter:saturate(180%) blur(10px);
+        backdrop-filter:saturate(180%) blur(10px);
+    }
+    .navbar-site .navbar-brand{
+        font-weight:600;letter-spacing:2px;color:#111;font-size:16px;
+        padding-top:18px;padding-bottom:18px;
+    }
+    .navbar-site .navbar-brand .dot{
+        display:inline-block;width:6px;height:6px;background:#111;border-radius:50%;
+        vertical-align:middle;margin-right:8px;
+    }
+    .navbar-site .nav > li > a{
+        color:var(--ink-2);font-size:13px;padding:20px 16px;position:relative;
+    }
+    .navbar-site .nav > li > a:after{
+        content:"";position:absolute;left:16px;right:16px;bottom:14px;height:1px;
+        background:#111;transform:scaleX(0);transform-origin:center;transition:transform .25s ease;
+    }
+    .navbar-site .nav > li > a:hover{color:#111;}
+    .navbar-site .nav > li > a:hover:after{transform:scaleX(1);}
+    .navbar-site .navbar-toggle{border:0;margin-top:14px;margin-bottom:14px;}
+    .navbar-site .navbar-toggle .icon-bar{background:#333;height:2px;border-radius:2px;}
+
+    /* ---------- Hero ---------- */
+    .hero{
+        position:relative;overflow:hidden;
+        padding:140px 0 120px;text-align:center;
+        background:
+            radial-gradient(900px 320px at 50% -10%, #f4f4f4 0%, rgba(255,255,255,0) 70%),
+            linear-gradient(180deg,#fcfcfc 0%,#ffffff 100%);
+    }
+    .hero:before{
+        content:"";position:absolute;inset:0;
+        background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+        background-size:64px 64px;
+        -webkit-mask-image:radial-gradient(700px 380px at 50% 30%,#000 0%,transparent 75%);
+        mask-image:radial-gradient(700px 380px at 50% 30%,#000 0%,transparent 75%);
+        opacity:.55;
+    }
+    .hero .container{position:relative;}
+    .hero .eyebrow{
+        display:inline-block;font-size:12px;letter-spacing:3px;color:var(--muted);
+        border:1px solid var(--line);border-radius:100px;padding:5px 16px;background:#fff;
+        margin-bottom:28px;
+    }
+    .hero h1{
+        font-size:44px;font-weight:600;letter-spacing:4px;margin:0 0 20px;
+        background:linear-gradient(90deg,#111 0%,#4a4a4a 50%,#111 100%);
+        -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .hero .lead{color:var(--ink-2);font-size:15px;max-width:520px;margin:0 auto 38px;}
+    .hero .btns a{margin:0 6px;}
+    .btn-pill{
+        display:inline-block;border-radius:100px;padding:11px 32px;font-size:14px;
+        transition:all .25s ease;border:1px solid transparent;
+    }
+    .btn-dark{background:#111;color:#fff;box-shadow:0 6px 18px rgba(0,0,0,.14);}
+    .btn-dark:hover{background:#000;color:#fff;transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.18);}
+    .btn-ghost{background:#fff;color:#333;border-color:#e2e2e2;}
+    .btn-ghost:hover{border-color:#111;color:#111;transform:translateY(-2px);}
+
+    /* ---------- 通用区块 ---------- */
+    .section{padding:88px 0;}
+    .section-soft{background:var(--bg-soft);}
+    .section-head{text-align:center;margin-bottom:52px;}
+    .section-head .kicker{
+        font-size:12px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:10px;
+    }
+    .section-head h2{
+        font-size:26px;font-weight:600;letter-spacing:2px;margin:0 0 10px;
+    }
+    .section-head p{color:var(--muted);font-size:13px;margin:0;}
+    .section-head .rule{
+        width:36px;height:2px;background:#111;margin:16px auto 0;border-radius:2px;
+    }
+
+    /* ---------- 分类卡片 ---------- */
+    .cat{
+        display:block;background:#fff;border:1px solid var(--line);border-radius:10px;
+        padding:34px 24px;text-align:center;margin-bottom:24px;
+        transition:transform .3s cubic-bezier(.2,.7,.3,1), box-shadow .3s ease, border-color .3s ease;
+    }
+    .cat .icon{
+        width:56px;height:56px;line-height:56px;border-radius:14px;margin:0 auto 18px;
+        background:linear-gradient(135deg,#f6f6f6 0%,#ececec 100%);
+        color:#333;font-size:20px;
+        transition:background .3s ease,color .3s ease;
+    }
+    .cat h4{font-size:15px;font-weight:600;margin:0 0 6px;letter-spacing:1px;}
+    .cat p{color:var(--muted);font-size:12px;margin:0;}
+    .cat:hover{
+        transform:translateY(-6px);border-color:#dedede;
+        box-shadow:0 14px 34px rgba(0,0,0,.08);
+    }
+    .cat:hover .icon{background:#111;color:#fff;}
+    .cat .arrow{
+        display:inline-block;margin-top:16px;font-size:12px;color:var(--muted);
+        opacity:0;transform:translateX(-4px);transition:all .3s ease;
+    }
+    .cat:hover .arrow{opacity:1;transform:translateX(0);color:#111;}
+
+    /* ---------- 数据条 ---------- */
+    .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:36px 0;background:#fff;}
+    .stat{text-align:center;}
+    .stat strong{display:block;font-size:26px;font-weight:600;letter-spacing:1px;}
+    .stat span{font-size:12px;color:var(--muted);letter-spacing:1px;}
+
+    /* ---------- 步骤 ---------- */
+    .steps{position:relative;}
+    .steps:before{
+        content:"";position:absolute;top:32px;left:16%;right:16%;height:1px;
+        background:repeating-linear-gradient(90deg,#e2e2e2 0 6px,transparent 6px 12px);
+    }
+    .step{text-align:center;position:relative;}
+    .step .num{
+        width:64px;height:64px;line-height:62px;border:1px solid var(--line);border-radius:50%;
+        margin:0 auto 18px;background:#fff;color:#111;font-size:18px;font-weight:600;
+        transition:all .3s ease;
+    }
+    .step:hover .num{background:#111;color:#fff;border-color:#111;box-shadow:0 8px 20px rgba(0,0,0,.12);}
+    .step h5{font-size:15px;font-weight:600;margin-bottom:6px;letter-spacing:1px;}
+    .step p{color:var(--muted);font-size:12px;margin:0;}
+
+    /* ---------- 公告 ---------- */
+    .notice{
+        background:#fff;border:1px solid var(--line);border-left:3px solid #111;border-radius:6px;
+        padding:26px 28px;color:var(--ink-2);font-size:13px;line-height:2;
+    }
+    .notice .fa{margin-right:8px;color:#111;}
+    .notice p{margin:0 0 8px;}
+    .notice p:last-child{margin-bottom:0;}
+
+    /* ---------- 页脚 ---------- */
+    footer{background:#111;color:#8c8c8c;padding:48px 0 34px;font-size:12px;}
+    footer .f-brand{color:#fff;font-size:15px;font-weight:600;letter-spacing:2px;margin-bottom:10px;}
+    footer .f-desc{color:#7a7a7a;max-width:420px;margin:0 auto 22px;line-height:1.9;}
+    footer .f-links{margin-bottom:24px;}
+    footer .f-links a{color:#9a9a9a;margin:0 12px;}
+    footer .f-links a:hover{color:#fff;}
+    footer .divider{width:60px;height:1px;background:#2c2c2c;margin:0 auto 22px;}
+    footer .beian a{color:#8c8c8c;margin:0 8px;transition:color .2s;}
+    footer .beian a:hover{color:#fff;}
+    footer .beian img{height:14px;vertical-align:-2px;margin-right:4px;opacity:.8;}
+    footer .copy{color:#666;margin-top:12px;}
+
+    /* ---------- 动效 ---------- */
+    .reveal{opacity:0;transform:translateY(18px);}
+    .reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1);}
+
+    @media (max-width:767px){
+        .hero{padding:84px 0 68px;}
+        .hero h1{font-size:28px;letter-spacing:2px;}
+        .section{padding:54px 0;}
+        .section-head{margin-bottom:36px;}
+        .section-head h2{font-size:21px;}
+        .steps:before{display:none;}
+        .step{margin-bottom:32px;}
+        .stat{margin-bottom:20px;}
+    }
+</style>
 </head>
 <body>
-    <div class="card">
-        <h1>xiuen.com</h1>
-        <p>Site initialized by oject.php</p>
+
+<nav class="navbar navbar-site navbar-fixed-top" id="topnav" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-main">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#"><span class="dot"></span>秀人网</a>
+        </div>
+        <div class="collapse navbar-collapse" id="nav-main">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#resource">资源分类</a></li>
+                <li><a href="#guide">获取引导</a></li>
+                <li><a href="#notice">公告</a></li>
+            </ul>
+        </div>
     </div>
+</nav>
+
+<header class="hero">
+    <div class="container">
+        <span class="eyebrow reveal">RESOURCE&nbsp;&nbsp;INDEX</span>
+        <h1 class="reveal">秀人网资源分享</h1>
+        <p class="lead reveal">聚合写真图集、影像与下载资源，用更简洁的方式，找到你想要的那一组。</p>
+        <div class="btns reveal">
+            <a href="#resource" class="btn-pill btn-dark">开始浏览</a>
+            <a href="#guide" class="btn-pill btn-ghost">获取引导</a>
+        </div>
+    </div>
+</header>
+
+<div class="stats reveal">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4 stat"><strong>4</strong><span>资源频道</span></div>
+            <div class="col-xs-4 stat"><strong>3</strong><span>步获取</span></div>
+            <div class="col-xs-4 stat"><strong>24h</strong><span>持续更新</span></div>
+        </div>
+    </div>
+</div>
+
+<section class="section" id="resource">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="kicker">Categories</div>
+            <h2>资源分类</h2>
+            <p>按类型快速定位你需要的资源</p>
+            <div class="rule"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-3 reveal">
+                <a href="#" class="cat">
+                    <div class="icon"><i class="fa fa-picture-o"></i></div>
+                    <h4>写真图集</h4>
+                    <p>高清成套图片合集</p>
+                    <span class="arrow">进入 <i class="fa fa-long-arrow-right"></i></span>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-3 reveal">
+                <a href="#" class="cat">
+                    <div class="icon"><i class="fa fa-video-camera"></i></div>
+                    <h4>影像视频</h4>
+                    <p>短片与花絮影像</p>
+                    <span class="arrow">进入 <i class="fa fa-long-arrow-right"></i></span>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-3 reveal">
+                <a href="#" class="cat">
+                    <div class="icon"><i class="fa fa-folder-open-o"></i></div>
+                    <h4>专题合集</h4>
+                    <p>按主题归整的打包资源</p>
+                    <span class="arrow">进入 <i class="fa fa-long-arrow-right"></i></span>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-3 reveal">
+                <a href="#" class="cat">
+                    <div class="icon"><i class="fa fa-cloud-download"></i></div>
+                    <h4>下载通道</h4>
+                    <p>网盘与直链地址</p>
+                    <span class="arrow">进入 <i class="fa fa-long-arrow-right"></i></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-soft" id="guide">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="kicker">How it works</div>
+            <h2>获取引导</h2>
+            <p>三步找到并保存所需资源</p>
+            <div class="rule"></div>
+        </div>
+        <div class="row steps">
+            <div class="col-sm-4 reveal">
+                <div class="step">
+                    <div class="num">1</div>
+                    <h5>选择分类</h5>
+                    <p>从上方资源分类进入对应频道</p>
+                </div>
+            </div>
+            <div class="col-sm-4 reveal">
+                <div class="step">
+                    <div class="num">2</div>
+                    <h5>查看详情</h5>
+                    <p>打开条目查看资源信息与规格</p>
+                </div>
+            </div>
+            <div class="col-sm-4 reveal">
+                <div class="step">
+                    <div class="num">3</div>
+                    <h5>获取资源</h5>
+                    <p>通过下载通道保存至本地</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="notice">
+    <div class="container">
+        <div class="section-head reveal">
+            <div class="kicker">Notice</div>
+            <h2>公告</h2>
+            <p>站点须知</p>
+            <div class="rule"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 reveal">
+                <div class="notice">
+                    <p><i class="fa fa-info-circle"></i>本站仅提供资源索引与导航，不存储任何实际文件内容。</p>
+                    <p><i class="fa fa-copyright"></i>所有资源版权归原作者所有，请勿用于商业用途。</p>
+                    <p><i class="fa fa-envelope-o"></i>如内容涉及侵权，请联系我们及时处理。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container text-center">
+        <div class="f-brand">秀人网</div>
+        <p class="f-desc">资源索引与分享导航，收录写真图集、影像视频与专题合集。</p>
+        <div class="f-links">
+            <a href="#resource">资源分类</a>
+            <a href="#guide">获取引导</a>
+            <a href="#notice">公告</a>
+        </div>
+        <div class="divider"></div>
+        <p class="beian">
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">鲁ICP备2024092961号-7</a>
+            <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37130202373077" target="_blank" rel="nofollow">
+                <img src="https://www.beian.gov.cn/img/ghs.png" alt="公安备案">鲁公网安备37130202373077号
+            </a>
+        </p>
+        <p class="copy">&copy; 2026 秀人网资源分享　保留所有权利</p>
+    </div>
+</footer>
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script>
+$(function () {
+    // 固定导航：滚动后显示阴影
+    var $nav = $('#topnav');
+    function onScroll() {
+        $nav.toggleClass('is-stuck', $(window).scrollTop() > 10);
+        revealInView();
+    }
+
+    // 滚动进入视口时淡入
+    function revealInView() {
+        var h = $(window).height();
+        $('.reveal').each(function () {
+            var $el = $(this);
+            if ($el.hasClass('in')) return;
+            if ($el.offset().top < $(window).scrollTop() + h - 60) {
+                $el.addClass('in');
+            }
+        });
+    }
+
+    // 平滑锚点滚动（抵消固定导航高度）
+    $('a[href^="#"]').on('click', function (e) {
+        var id = $(this).attr('href');
+        if (id === '#' || !$(id).length) return;
+        e.preventDefault();
+        $('html, body').animate({ scrollTop: $(id).offset().top - 62 }, 500);
+        $('.navbar-collapse.in').collapse('hide');
+    });
+
+    // 首屏元素错峰入场
+    $('.hero .reveal').each(function (i) {
+        var $el = $(this);
+        setTimeout(function () { $el.addClass('in'); }, 120 * i);
+    });
+
+    $(window).on('scroll resize', onScroll);
+    onScroll();
+});
+</script>
 </body>
 </html>
